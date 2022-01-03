@@ -1,0 +1,29 @@
+ from selenium import webdriver
+
+driver = webdriver.Chrome(executable_path="")
+url = "http://www.google.com"
+driver.get(url)
+
+#cookies
+try: 
+    frame = driver.find_element_by_xpath('//*[@id="cnsw"]/iframe') 
+    driver.switch_to.frame(frame) 
+    driver.find_element_by_xpath('//*[@id="introAgreeButton"]').click()
+
+except:
+    driver.find_element_by_xpath('//*[@id="L2AGLb"]').click()
+    
+#suche abschicken
+search_box = driver.find_element_by_name("q")
+search_box.send_keys("amazon ratenzahlung")
+search_box.submit()  
+
+#ergebnisse scrapen
+title = driver.find_element_by_xpath('.//h3[@class="LC20lb MBeuO DKV0Md"]').text
+print(title)
+
+link = driver.find_element_by_xpath('.//div[@class="yuRUbf"]/a').get_attribute('href')
+driver.get(link)
+print(link)
+driver.quit()
+
